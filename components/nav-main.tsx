@@ -1,11 +1,34 @@
-"use client";
+"use client"
 
-import { usePathname } from "next/navigation";
-import { useSidebarState } from "@/components/app-sidebar";
+import { type LucideIcon } from "lucide-react"
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar"
 
-const items = [["Search", "⌕"], ["Ask AI", "✧"], ["Home", "⌂"], ["Inbox", "▱"]];
-export function NavMain() {
-  const pathname = usePathname();
-  const { open } = useSidebarState();
-  return <nav className="primary-nav" aria-label="Main navigation">{items.map(([label, icon]) => <button key={label} className={`nav-item ${label === "Home" && pathname === "/dashboard" ? "selected" : ""}`} title={!open ? label : undefined}><span className="nav-icon-text">{icon}</span><span>{label}</span>{label === "Inbox" && <span className="inbox-count">3</span>}</button>)}</nav>;
+export function NavMain({
+  items,
+}: {
+  items: {
+    title: string
+    url: string
+    icon: LucideIcon
+    isActive?: boolean
+  }[]
+}) {
+  return (
+    <SidebarMenu>
+      {items.map((item) => (
+        <SidebarMenuItem key={item.title}>
+          <SidebarMenuButton asChild isActive={item.isActive}>
+            <a href={item.url}>
+              <item.icon />
+              <span>{item.title}</span>
+            </a>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
+  )
 }

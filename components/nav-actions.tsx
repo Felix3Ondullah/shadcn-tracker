@@ -1,16 +1,110 @@
+"use client"
+
+import * as React from "react"
+import {
+  ArrowDown,
+  ArrowUp,
+  Bell,
+  Copy,
+  CornerUpLeft,
+  CornerUpRight,
+  FileText,
+  GalleryVerticalEnd,
+  LineChart,
+  Link,
+  MoreHorizontal,
+  Settings2,
+  Star,
+  Trash,
+  Trash2,
+} from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar"
+
+const data = [
+  [
+    { label: "Customize Page", icon: Settings2 },
+    { label: "Turn into wiki", icon: FileText },
+  ],
+  [
+    { label: "Copy Link", icon: Link },
+    { label: "Duplicate", icon: Copy },
+    { label: "Move to", icon: CornerUpRight },
+    { label: "Move to Trash", icon: Trash2 },
+  ],
+  [
+    { label: "Undo", icon: CornerUpLeft },
+    { label: "View analytics", icon: LineChart },
+    { label: "Version History", icon: GalleryVerticalEnd },
+    { label: "Show delete pages", icon: Trash },
+    { label: "Notifications", icon: Bell },
+  ],
+  [
+    { label: "Import", icon: ArrowUp },
+    { label: "Export", icon: ArrowDown },
+  ],
+]
+
 export function NavActions() {
+  const [isOpen, setIsOpen] = React.useState(true)
+
   return (
-    <div className="nav-actions">
-      <span className="edited-label">Edited Oct 08</span>
-      <button className="icon-button" aria-label="Favorite page">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
-          <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z" />
-        </svg>
-      </button>
-      <button className="icon-button" aria-label="More page options">•••</button>
-      <span className="topbar-divider" />
-      <button className="share-button">Share</button>
-      <button className="avatar avatar-purple avatar-small" aria-label="Jordan Davis">JD</button>
+    <div className="flex items-center gap-2 text-sm">
+      <div className="hidden font-medium text-muted-foreground md:inline-block">
+        Edit Oct 08
+      </div>
+      <Button variant="ghost" size="icon" className="h-7 w-7">
+        <Star />
+      </Button>
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7 data-[state=open]:bg-accent"
+          >
+            <MoreHorizontal />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-56 overflow-hidden rounded-lg p-0"
+          align="end"
+        >
+          <Sidebar collapsible="none" className="bg-transparent">
+            <SidebarContent>
+              {data.map((group, index) => (
+                <SidebarGroup key={index} className="border-b last:border-none">
+                  <SidebarGroupContent className="gap-0">
+                    <SidebarMenu>
+                      {group.map((item, itemIndex) => (
+                        <SidebarMenuItem key={itemIndex}>
+                          <SidebarMenuButton>
+                            <item.icon /> <span>{item.label}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
+              ))}
+            </SidebarContent>
+          </Sidebar>
+        </PopoverContent>
+      </Popover>
     </div>
-  );
+  )
 }

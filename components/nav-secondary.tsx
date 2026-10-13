@@ -1,2 +1,42 @@
-const items = [["Calendar", "▦"], ["Settings", "☷"], ["Templates", "▦"], ["Trash", "▤"], ["Help", "?" ]];
-export function NavSecondary() { return <div className="sidebar-bottom">{items.map(([label,icon])=><button key={label} className="nav-item" title={label}><span className="nav-icon-text">{icon}</span><span>{label}</span></button>)}<button className="profile-row"><span className="avatar avatar-purple">JD</span><span className="profile-name">Jordan Davis<small>jordan@acme.co</small></span><span className="more-dots">•••</span></button></div>; }
+import React from "react"
+import { type LucideIcon } from "lucide-react"
+import {
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar"
+
+export function NavSecondary({
+  items,
+  ...props
+}: {
+  items: {
+    title: string
+    url: string
+    icon: LucideIcon
+    badge?: React.ReactNode
+  }[]
+} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  return (
+    <SidebarGroup {...props}>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton asChild>
+                <a href={item.url}>
+                  <item.icon />
+                  <span>{item.title}</span>
+                </a>
+              </SidebarMenuButton>
+              {item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  )
+}
