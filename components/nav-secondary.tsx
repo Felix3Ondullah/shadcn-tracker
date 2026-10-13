@@ -1,0 +1,2 @@
+const items = [["Calendar", "▦"], ["Settings", "☷"], ["Templates", "▦"], ["Trash", "▤"], ["Help", "?" ]];
+export function NavSecondary() { return <div className="sidebar-bottom">{items.map(([label,icon])=><button key={label} className="nav-item" title={label}><span className="nav-icon-text">{icon}</span><span>{label}</span></button>)}<button className="profile-row"><span className="avatar avatar-purple">JD</span><span className="profile-name">Jordan Davis<small>jordan@acme.co</small></span><span className="more-dots">•••</span></button></div>; }
