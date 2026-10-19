@@ -1,19 +1,16 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import './globals.css'
 
 export const metadata: Metadata = {
-  title: "Project Management & Task Tracking | Acme Corp.",
-  description: "A clear view of your team's projects, tasks, and progress.",
-};
+  title: 'UI Practice Workspace',
+  description: 'A static shadcn/ui workspace practice interface.',
+}
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={cn("h-full antialiased dark", "font-sans", geist.variable)}>
-      <body className="min-h-full">{children}</body>
+    <html lang="en" className="dark">
+      <body>{children}</body>
     </html>
-  );
+  )
 }
